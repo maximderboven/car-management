@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace CA
+namespace Project.CA
 {
     public class Car
     {
-        private string Brand { get; set; }
-        private string NumberPlate { get; set; }
+        public string Brand { get; set; }
+        public string NumberPlate { get; set; }
         public Fuel Fuel { get; set ; }
-        private short Seats { get; set; }
-        private double Mileage { get; set; }
-        private Garage Garage { get; set; }
-        private long? PurchasePrice = null;
+        public short Seats { get; set; }
+        public double Mileage { get; set; }
+        public Garage Garage { get; set; }
+        public long? PurchasePrice = null;
 
-        public ICollection<Driver> Drivers { get;}
+        public ICollection<Driver> Drivers;
 
         public Car(long? purchasePrice, string brand, string numberPlate, Fuel fuel, short seats, double mileage,
             Garage garage)
@@ -44,6 +43,7 @@ namespace CA
 
         public override string ToString()
         {
+            //or with $""
             return String.Format("Car: {0} from {1} maintained by: {2}",NumberPlate,Brand,Garage);
         }
         

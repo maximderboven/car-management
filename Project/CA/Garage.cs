@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace CA
+﻿namespace Project.CA
 {
     public class Garage
     {
-        private string Name { get; set; }
-        private string Adress { get; set; }
-        private string Telnr { get; set; }
+        public string Name { get; set; }
+        public string Adress { get; set; }
+        public string Telnr { get; set; }
 
         public Garage(string name, string adress, string telnr)
         {

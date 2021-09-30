@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Sockets;
 
-namespace CA
+namespace Project.CA
 {
-    class Program
+    internal class Program
     {
         private List<Driver> _drivers;
         private List<Car> _cars;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var program = new Program();
             program.Run();
         }
 
-        void Run()
+        private void Run()
         {
             Seed();
             byte n;
             do
             {
-                Console.WriteLine("- Maxim's Car Insurancy -\nWhat would you like to do?\n==========================");
+                Console.WriteLine("- Car Insurance -\nWhat would you like to do?\n==========================");
                 Console.WriteLine(
                     "0) Quit\n1) Show all cars\n2) Show cars by Fuel \n3) Show all drivers \n4) All drivers with name and/or date of birth");
                 Console.Write("Choice (0-5): ");
@@ -49,17 +47,14 @@ namespace CA
                             Console.Write("Fuel (");
                             for (byte i = 0; i < Enum.GetNames(typeof(Fuel)).Length; i++)
                             {
-                                Console.Write(i + "=" + Enum.GetNames(typeof(Fuel))[i] + ",");
+                                Console.Write(i+1 + "=" + Enum.GetNames(typeof(Fuel))[i] + ",");
                             }
 
                             Console.Write("\b): ");
                             valid = Int32.TryParse(Console.ReadLine(), out int f);
-                            foreach (Car c in _cars)
+                            foreach (var c in _cars.Where(c => c.Fuel.Equals((Fuel) f-1)))
                             {
-                                if (c.Fuel.Equals((Fuel) f))
-                                {
-                                    Console.Write(c);
-                                }
+                                Console.Write(c+ "\n");
                             }
                         } while (!valid);
 
@@ -80,8 +75,11 @@ namespace CA
                         string name = Console.ReadLine();
                         Console.Write("Enter a full date (yyyy/mm/dd) or leave blank: ");
                         string dob = Console.ReadLine();
-                        foreach (Driver d in _drivers.Where(d => (name == null || (d.FirstName + d.LastName).ToLower().Contains(name)) || (
-                            (dob == null) || ((dob != null) ? d.DateOfBirth == Convert.ToDateTime(dob).Date : false))))
+                        foreach (Driver d in
+                            _drivers.Where(d =>
+                                ((name == null) ||
+                                 (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower())) && (
+                                    dob is null or "" || (d.DateOfBirth.Date == Convert.ToDateTime(dob).Date))))
                         {
                             Console.WriteLine(d);
                         }
@@ -89,16 +87,17 @@ namespace CA
                         break;
 
                     default:
-                        Console.WriteLine("");
+                        Console.WriteLine($"{n} is not a valid option.");
                         break;
                 }
 
                 Console.WriteLine("\n\n");
             } while (n != 0);
             //Environment.Exit(0);
+            //Auto exit cuz of end program
         }
 
-        void Seed()
+        private void Seed()
         {
             //init lists
             _drivers = new List<Driver>();
@@ -112,11 +111,12 @@ namespace CA
             Garage g1 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
             Garage g2 = new Garage("Van Dessel", "Mortsel", "+3234403236");
 
-            _cars.Add(new Car("Citroen", "1YKB221", Fuel.GAS, 4, 0, g1));
-            _cars.Add(new Car(10000, "Opel", "1DHZ264", Fuel.GAS, 6, 0, g1));
-            _cars.Add(new Car("Audi", "2YGZ291", Fuel.OIL, 5, 5000, g2));
-            _cars.Add(new Car(35540, "BMW", "2PDZ468", Fuel.LPG, 5, 6000, g2));
+            _cars.Add(new Car("Citroen", "1YKB221", Fuel.Gas, 4, 0, g1));
+            _cars.Add(new Car(10000, "Opel", "1DHZ264", Fuel.Gas, 6, 0, g1));
+            _cars.Add(new Car("Audi", "2YGZ291", Fuel.Oil, 5, 5000, g2));
+            _cars.Add(new Car(35540, "BMW", "2PDZ468", Fuel.Lpg, 5, 6000, g2));
 
+            //Drivers toevoegen aan autoos
             Random r = new Random();
             foreach (Car c in _cars)
             {
@@ -125,6 +125,15 @@ namespace CA
                     c.Drivers.Add(_drivers[r.Next(_drivers.Count)]);
                 }
             }
+            //autoos toevoegen aan drivers
+            foreach (Driver d in _drivers)
+            {
+                for (int i = 0; i < r.Next(_cars.Count) + 1; i++)
+                {
+                    d.Cars.Add(_cars[r.Next(_cars.Count)]);
+                }
+            }
+            
         }
     }
 }

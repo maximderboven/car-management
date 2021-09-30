@@ -1,7 +1,7 @@
-﻿namespace CA
+﻿namespace Project.CA
 {
     public enum Fuel
     {
-        GAS, OIL, LPG
+        Gas, Oil, Lpg
     }
 }

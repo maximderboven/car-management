@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Project.Domain;
 
-namespace Project.CA
+namespace Project.UI.CA
 {
     internal class Program
     {
         private List<Driver> _drivers;
         private List<Car> _cars;
 
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var program = new Program();
             program.Run();

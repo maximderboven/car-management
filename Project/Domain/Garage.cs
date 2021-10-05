@@ -1,10 +1,11 @@
-﻿namespace Project.CA
+﻿namespace Project.Domain
 {
     public class Garage
     {
         public string Name { get; set; }
         public string Adress { get; set; }
         public string Telnr { get; set; }
+        public int Id { get; set; }
 
         public Garage(string name, string adress, string telnr)
         {

@@ -1,4 +1,4 @@
-﻿namespace Project.CA
+﻿namespace Project.Domain
 {
     public enum Fuel
     {

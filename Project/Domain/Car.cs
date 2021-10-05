@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project.CA
+namespace Project.Domain
 {
     public class Car
     {
@@ -12,6 +12,7 @@ namespace Project.CA
         public double Mileage { get; set; }
         public Garage Garage { get; set; }
         public long? PurchasePrice = null;
+        public int Id { get; set; }
 
         public ICollection<Driver> Drivers;
 

@@ -10,7 +10,6 @@ namespace Project.Domain
         public int SocialNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public ICollection<Car> Cars { get; set; }
-        public int Id { get; set; }
 
         public Driver(string firstName, string lastName, int socialNumber, DateTime dateOfBirth)
         {

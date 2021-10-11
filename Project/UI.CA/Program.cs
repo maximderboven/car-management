@@ -7,8 +7,6 @@ namespace Project.UI.CA
 {
     internal class Program
     {
-        private List<Driver> _drivers;
-        private List<Car> _cars;
 
         public static void Main(string[] args)
         {
@@ -98,43 +96,6 @@ namespace Project.UI.CA
             //Auto exit cuz of end program
         }
 
-        private void Seed()
-        {
-            //init lists
-            _drivers = new List<Driver>();
-            _cars = new List<Car>();
-
-            _drivers.Add(new Driver("Andy", "Kost", 86528736, new DateTime(1994, 1, 5)));
-            _drivers.Add(new Driver("Jilles", "Frieling", 31121614, new DateTime(1983, 5, 17)));
-            _drivers.Add(new Driver("Luite", "Poel", 42585915, new DateTime(1958, 10, 12)));
-            _drivers.Add(new Driver("Caroliene", "Karremans", 39606540, new DateTime(1945, 8, 7)));
-
-            Garage g1 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
-            Garage g2 = new Garage("Van Dessel", "Mortsel", "+3234403236");
-
-            _cars.Add(new Car("Citroen", "1YKB221", Fuel.Gas, 4, 0, g1));
-            _cars.Add(new Car(10000, "Opel", "1DHZ264", Fuel.Gas, 6, 0, g1));
-            _cars.Add(new Car("Audi", "2YGZ291", Fuel.Oil, 5, 5000, g2));
-            _cars.Add(new Car(35540, "BMW", "2PDZ468", Fuel.Lpg, 5, 6000, g2));
-
-            //Drivers toevoegen aan autoos
-            Random r = new Random();
-            foreach (Car c in _cars)
-            {
-                for (int i = 0; i < r.Next(_drivers.Count) + 1; i++)
-                {
-                    c.Drivers.Add(_drivers[r.Next(_drivers.Count)]);
-                }
-            }
-            //autoos toevoegen aan drivers
-            foreach (Driver d in _drivers)
-            {
-                for (int i = 0; i < r.Next(_cars.Count) + 1; i++)
-                {
-                    d.Cars.Add(_cars[r.Next(_cars.Count)]);
-                }
-            }
-            
-        }
+        
     }
 }

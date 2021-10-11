@@ -12,7 +12,6 @@ namespace Project.Domain
         public double Mileage { get; set; }
         public Garage Garage { get; set; }
         public long? PurchasePrice = null;
-        public int Id { get; set; }
 
         public ICollection<Driver> Drivers;
 

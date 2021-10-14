@@ -49,9 +49,9 @@ namespace Project.DAL
 
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dob)
         {
-            //to be implemented
-            //return _drivers.FindAll(car =>);
-            return null;
+            return _drivers.Where(d =>
+                ((name is null) || (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower()))
+                && (dob.Equals(default(DateTime)) || dob.Equals(d.DateOfBirth.Date)));
         }
 
         public void CreateDriver(Driver driver)
@@ -77,8 +77,8 @@ namespace Project.DAL
 
             CreateCar(new Car(null, "Citroen", Fuel.Gas, 4, 0, g1));
             CreateCar(new Car(10000, "Opel", Fuel.Gas, 6, 0, g1));
-            CreateCar(new Car(null,"Audi", Fuel.Oil, 5, 5000, g2));
-            CreateCar(new Car(35540, "BMW",  Fuel.Lpg, 5, 6000, g2));
+            CreateCar(new Car(null, "Audi", Fuel.Oil, 5, 5000, g2));
+            CreateCar(new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g2));
 
             /*//autoos toevoegen aan drivers
             _drivers[0].Cars.Add(_cars[1]);
@@ -108,7 +108,6 @@ namespace Project.DAL
             
             g2.Cars.Add(_cars[2]);
             g2.Cars.Add(_cars[3]);*/
-
         }
     }
 }

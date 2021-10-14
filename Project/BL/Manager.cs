@@ -31,6 +31,7 @@ namespace Project.BL
 
         public Car AddCar(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
+            if (mileage < 0) throw new Exception();
             var car = new Car(purchasePrice, brand, fuel, seats, mileage, garage);
             _repo.CreateCar(car);
             return car;

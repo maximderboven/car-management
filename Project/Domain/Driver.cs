@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project.Domain
 {
     public class Driver
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set ; }
-        public int SocialNumber { get; set; }
+        [StringLength(5)]public string FirstName { get; set; }
+        [StringLength(5)][Required] public string LastName { get; set ; }
+        [Key] public int SocialNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public ICollection<Car> Cars { get; set; }
 

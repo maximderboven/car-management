@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Project.BL;
 using Project.Domain;
 
 namespace Project.UI.CA
 {
     internal class Program
     {
+        
+        private static readonly IManager Manager = new Manager();
 
         public static void Main(string[] args)
         {
@@ -16,7 +19,6 @@ namespace Project.UI.CA
 
         private void Run()
         {
-            Seed();
             byte n;
             do
             {
@@ -29,43 +31,38 @@ namespace Project.UI.CA
                 {
                     case 0:
                         break;
-
                     case 1:
                         Console.WriteLine("\nAll cars\n=========");
-                        foreach (Car c in _cars)
+                        foreach (Car c in Manager.GetAllCars())
                         {
                             Console.WriteLine(c);
                         }
-
                         break;
-
                     case 2:
                         bool valid;
                         do
                         {
                             Console.Write("Fuel (");
-                            for (byte i = 0; i < Enum.GetNames(typeof(Fuel)).Length; i++)
-                            {
-                                Console.Write(i+1 + "=" + Enum.GetNames(typeof(Fuel))[i] + ",");
+                            Fuel[] enums = (Fuel[])Enum.GetValues (typeof(Fuel));
+                            for (byte i = 0; i < enums.Length; i++) {
+                                Console.Write(i+1 + "=" + enums[i] + ",");
                             }
-
                             Console.Write("\b): ");
-                            valid = Int32.TryParse(Console.ReadLine(), out int f);
-                            foreach (var c in _cars.Where(c => c.Fuel.Equals((Fuel) f-1)))
-                            {
-                                Console.Write(c+ "\n");
+                            valid = Int32.TryParse(Console.ReadLine() ?? string.Empty, out int fuelType);
+                            if (!valid)
+                                continue;
+                            foreach (Car c in Manager.GetCarsBy((Fuel)fuelType)) {
+                                Console.WriteLine(c);
                             }
                         } while (!valid);
-
                         break;
 
                     case 3:
                         Console.WriteLine("\nAll drivers\n=========");
-                        foreach (Driver d in _drivers)
+                        foreach (Driver d in Manager.GetAllDrivers())
                         {
                             Console.WriteLine(d);
                         }
-
                         break;
 
                     case 4:
@@ -73,16 +70,11 @@ namespace Project.UI.CA
                         Console.Write("Enter (part of) a name or leave blank:");
                         string name = Console.ReadLine();
                         Console.Write("Enter a full date (yyyy/mm/dd) or leave blank: ");
-                        string dob = Console.ReadLine();
-                        foreach (Driver d in
-                            _drivers.Where(d =>
-                                ((name == null) ||
-                                 (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower())) && (
-                                    dob is null or "" || (d.DateOfBirth.Date == Convert.ToDateTime(dob).Date))))
+                        DateTime dob = DateTime.Parse(Console.ReadLine());
+                        foreach (Driver d in Manager.GetAllDriversBy(name,dob))
                         {
                             Console.WriteLine(d);
                         }
-
                         break;
 
                     default:

@@ -11,13 +11,11 @@ namespace Project.Domain
         public DateTime DateOfBirth { get; set; }
         public ICollection<Car> Cars { get; set; }
 
-        public Driver(string firstName, string lastName, int socialNumber, DateTime dateOfBirth)
+        public Driver(string firstName, string lastName,DateTime dateOfBirth)
         {
-            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
-            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
-            SocialNumber = socialNumber;
+            FirstName = firstName;
+            LastName = lastName;
             DateOfBirth = dateOfBirth;
-            
             Cars = new List<Car>();
         }
 

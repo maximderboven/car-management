@@ -6,7 +6,7 @@ namespace Project.DAL
 {
     public interface IRepository
     {
-        public Car ReadCar(string numberplate);
+        public Car ReadCar(int numberplate);
         public IEnumerable<Car> ReadAllCars();
         public IEnumerable<Car> ReadCarsOf(Fuel fuel);
         public void CreateCar(Car car);

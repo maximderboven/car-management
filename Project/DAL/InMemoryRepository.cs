@@ -15,7 +15,7 @@ namespace Project.DAL
             Seed();
         }
 
-        public Car ReadCar(string numberplate)
+        public Car ReadCar(int numberplate)
         {
             return _cars.FirstOrDefault(car => car.NumberPlate.Equals(numberplate));
         }
@@ -33,7 +33,7 @@ namespace Project.DAL
         public void CreateCar(Car car)
         {
             if (_cars.Contains(car)) return;
-            car.NumberPlate += 1;
+            car.NumberPlate = _cars.Count + 1;
             _cars.Add(car);
         }
 
@@ -57,7 +57,7 @@ namespace Project.DAL
         public void CreateDriver(Driver driver)
         {
             if (_drivers.Contains(driver)) return;
-            driver.SocialNumber += 1;
+            driver.SocialNumber = _drivers.Count + 1;
             _drivers.Add(driver);
         }
 
@@ -67,18 +67,18 @@ namespace Project.DAL
             _drivers = new List<Driver>();
             _cars = new List<Car>();
 
-            CreateDriver(new Driver("Andy", "Kost", 86528736, new DateTime(1994, 1, 5))););
-            CreateDriver(new Driver("Jilles", "Frieling", 31121614, new DateTime(1983, 5, 17)));
-            CreateDriver(new Driver("Luite", "Poel", 42585915, new DateTime(1958, 10, 12)));
-            CreateDriver(new Driver("Caroliene", "Karremans", 39606540, new DateTime(1945, 8, 7)));
+            CreateDriver(new Driver("Andy", "Kost", new DateTime(1994, 1, 5)));
+            CreateDriver(new Driver("Jilles", "Frieling", new DateTime(1983, 5, 17)));
+            CreateDriver(new Driver("Luite", "Poel", new DateTime(1958, 10, 12)));
+            CreateDriver(new Driver("Caroliene", "Karremans", new DateTime(1945, 8, 7)));
 
             Garage g1 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
             Garage g2 = new Garage("Van Dessel", "Mortsel", "+3234403236");
 
-            CreateCar(new Car("Citroen", "1YKB221", Fuel.Gas, 4, 0, g1));
-            CreateCar(new Car(10000, "Opel", "1DHZ264", Fuel.Gas, 6, 0, g1));
-            CreateCar(new Car("Audi", "2YGZ291", Fuel.Oil, 5, 5000, g2));
-            CreateCar(new Car(35540, "BMW", "2PDZ468", Fuel.Lpg, 5, 6000, g2));
+            CreateCar(new Car(null, "Citroen", Fuel.Gas, 4, 0, g1));
+            CreateCar(new Car(10000, "Opel", Fuel.Gas, 6, 0, g1));
+            CreateCar(new Car(null,"Audi", Fuel.Oil, 5, 5000, g2));
+            CreateCar(new Car(35540, "BMW",  Fuel.Lpg, 5, 6000, g2));
 
             /*//autoos toevoegen aan drivers
             _drivers[0].Cars.Add(_cars[1]);

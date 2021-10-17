@@ -77,8 +77,12 @@ namespace Project.DAL
 
             CreateCar(new Car(null, "Citroen", Fuel.Gas, 4, 0, g1));
             CreateCar(new Car(10000, "Opel", Fuel.Gas, 6, 0, g1));
+            //g1.Cars.Add(_cars[0]);
+            //g1.Cars.Add(_cars[1]);
             CreateCar(new Car(null, "Audi", Fuel.Oil, 5, 5000, g2));
             CreateCar(new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g2));
+            //g1.Cars.Add(_cars[2]);
+            //g1.Cars.Add(_cars[3]);
 
             /*//autoos toevoegen aan drivers
             _drivers[0].Cars.Add(_cars[1]);
@@ -105,9 +109,7 @@ namespace Project.DAL
             //cars toevoegen aan garage voor onderhoud.
             g1.Cars.Add(_cars[0]);
             g1.Cars.Add(_cars[1]);
-            
-            g2.Cars.Add(_cars[2]);
-            g2.Cars.Add(_cars[3]);*/
+            */
         }
     }
 }

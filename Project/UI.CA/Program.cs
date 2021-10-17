@@ -184,12 +184,12 @@ namespace Project.UI.CA
         }
         private static short ChooseSeats()
         {
-            Console.WriteLine("Amount of seats:");
+            Console.Write("Amount of seats:");
             return short.Parse(Console.ReadLine());
         }
         private static int ChooseMileage()
         {
-            Console.WriteLine("Amount of seats:");
+            Console.Write("Amount of miles on count:");
             return int.Parse(Console.ReadLine());
         }
         private static Garage ChooseGarage()

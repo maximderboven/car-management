@@ -12,6 +12,11 @@ namespace Project.Domain
         public DateTime DateOfBirth { get; set; }
         public ICollection<Car> Cars { get; set; }
 
+        public Driver()
+        {
+            Cars = new List<Car>();
+        }
+
         public Driver(string firstName, string lastName,DateTime dateOfBirth)
         {
             FirstName = firstName;

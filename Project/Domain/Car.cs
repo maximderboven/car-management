@@ -15,7 +15,12 @@ namespace Project.Domain
         public long? PurchasePrice = null;
 
         public ICollection<Driver> Drivers;
-        
+
+        public Car()
+        {
+            Drivers = new List<Driver>();
+        }
+
         public Car(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
             PurchasePrice = purchasePrice;

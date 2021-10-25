@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using Project.BL;
+using Project.DAL;
+using Project.DAL.EF;
 using Project.Domain;
 
 namespace Project.UI.CA
 {
     internal class Program
     {
-        private static readonly IManager Manager = new Manager();
+        private readonly IManager _manager;
+
+        public Program()
+        {
+            //_manager = new Manager(new InMemoryRepository());
+            _manager = new Manager(new Repository());
+        }
 
         public static void Main(string[] args)
         {
-            Run();
+            new Program().Run();
         }
 
-        private static void Run()
+        private void Run()
         {
             byte n;
             do
@@ -72,15 +80,15 @@ namespace Project.UI.CA
             Console.Write("Choice (0-6): ");
         }
 
-        private static void PrintAllCars()
+        private void PrintAllCars()
         {
-            foreach (var c in Manager.GetAllCars())
+            foreach (var c in _manager.GetAllCars())
             {
                 Console.WriteLine(c);
             }
         }
 
-        private static void PrintEnumWithIndex()
+        private void PrintEnumWithIndex()
         {
             Console.Write("Fuel (");
             var enums = (Fuel[]) Enum.GetValues(typeof(Fuel));
@@ -91,23 +99,23 @@ namespace Project.UI.CA
             Console.Write("\b): ");
         }
 
-        private static void PrintCarsByFuel(int fuelType)
+        private void PrintCarsByFuel(int fuelType)
         {
-            foreach (var c in Manager.GetCarsBy((Fuel) fuelType - 1))
+            foreach (var c in _manager.GetCarsBy((Fuel) fuelType - 1))
             {
                 Console.WriteLine(c);
             }
         }
 
-        private static void PrintAllDrivers()
+        private void PrintAllDrivers()
         {
-            foreach (var d in Manager.GetAllDrivers())
+            foreach (var d in _manager.GetAllDrivers())
             {
                 Console.WriteLine(d);
             }
         }
 
-        private static void PrintDriversByDateOrName()
+        private void PrintDriversByDateOrName()
         {
             Console.Write("Enter (part of) a name or leave blank:");
             var name = Console.ReadLine();
@@ -115,17 +123,17 @@ namespace Project.UI.CA
             var dob = DateTime.TryParse(Console.ReadLine() ?? "", out var tempdate)
                 ? tempdate
                 : default;
-            foreach (var d in Manager.GetAllDriversBy(name, dob))
+            foreach (var d in _manager.GetAllDriversBy(name, dob))
             {
                 Console.WriteLine(d);
             }
         }
 
-        private static void AddDriver()
+        private void AddDriver()
         {
             try
             {
-                Manager.AddDriver(ChooseFirstname(), ChooseLastName(), ChooseDateOfBirth());
+                _manager.AddDriver(ChooseFirstname(), ChooseLastName(), ChooseDateOfBirth());
                 Console.WriteLine("Added new driver succesfully.");
             }
             catch (Exception e)
@@ -135,11 +143,11 @@ namespace Project.UI.CA
             }
         }
         
-        private static void AddCar()
+        private void AddCar()
         {
             try
             {
-                Manager.AddCar(ChoosePurchasePrice(),ChooseBrand(),ChooseFuel(),ChooseSeats(),ChooseMileage(),ChooseGarage());
+                _manager.AddCar(ChoosePurchasePrice(),ChooseBrand(),ChooseFuel(),ChooseSeats(),ChooseMileage(),ChooseGarage());
                 Console.WriteLine("Added new car succesfully.");
             }
             catch (Exception e)
@@ -149,12 +157,12 @@ namespace Project.UI.CA
             }
         }
 
-        private static string ChooseLastName()
+        private string ChooseLastName()
         {
             Console.Write("lastname: ");
             return Console.ReadLine();
         }
-        private static string ChooseFirstname()
+        private string ChooseFirstname()
         {
             Console.Write("firstname: ");
             return Console.ReadLine();
@@ -164,35 +172,35 @@ namespace Project.UI.CA
             Console.Write("Date of birth (mm/dd/yyyy): ");
             return Convert.ToDateTime(Console.ReadLine());
         }
-        private static int? ChoosePurchasePrice()
+        private int? ChoosePurchasePrice()
         {
             Console.Write("Purchase Price (optional): ");
             if(int.TryParse(Console.ReadLine(), out var n));
                 return n;
             return null;
         }
-        private static string ChooseBrand()
+        private string ChooseBrand()
         {
             Console.Write("Brand:");
             return Console.ReadLine();
         }
-        private static Fuel ChooseFuel()
+        private Fuel ChooseFuel()
         {
             Console.Write("Fuel:");
             PrintEnumWithIndex();
             return (Fuel) int.Parse(Console.ReadLine());
         }
-        private static short ChooseSeats()
+        private short ChooseSeats()
         {
             Console.Write("Amount of seats:");
             return short.Parse(Console.ReadLine());
         }
-        private static int ChooseMileage()
+        private int ChooseMileage()
         {
             Console.Write("Amount of miles on count:");
             return int.Parse(Console.ReadLine());
         }
-        private static Garage ChooseGarage()
+        private Garage ChooseGarage()
         {
             return null;
         }

@@ -9,9 +9,9 @@ namespace Project.BL
     public class Manager : IManager
     {
         private readonly IRepository _repo;
-        public Manager()
+        public Manager(IRepository repo)
         {
-            _repo = new InMemoryRepository();
+            _repo = repo;
         }
 
         public Car GetCar(int numberplate)

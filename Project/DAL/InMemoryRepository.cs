@@ -72,19 +72,16 @@ namespace Project.DAL
             CreateDriver(new Driver("Luite", "Poel", new DateTime(1958, 10, 12)));
             CreateDriver(new Driver("Caroliene", "Karremans", new DateTime(1945, 8, 7)));
 
-            Garage g1 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
-            Garage g2 = new Garage("Van Dessel", "Mortsel", "+3234403236");
-
+            var g1 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
+            var g2 = new Garage("Van Dessel", "Mortsel", "+3234403236");
+            
             CreateCar(new Car(null, "Citroen", Fuel.Gas, 4, 0, g1));
             CreateCar(new Car(10000, "Opel", Fuel.Gas, 6, 0, g1));
-            //g1.Cars.Add(_cars[0]);
-            //g1.Cars.Add(_cars[1]);
             CreateCar(new Car(null, "Audi", Fuel.Oil, 5, 5000, g2));
             CreateCar(new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g2));
-            //g1.Cars.Add(_cars[2]);
-            //g1.Cars.Add(_cars[3]);
+            
 
-            /*//autoos toevoegen aan drivers
+            //autoos toevoegen aan drivers
             _drivers[0].Cars.Add(_cars[1]);
             _drivers[0].Cars.Add(_cars[2]);
             
@@ -109,7 +106,10 @@ namespace Project.DAL
             //cars toevoegen aan garage voor onderhoud.
             g1.Cars.Add(_cars[0]);
             g1.Cars.Add(_cars[1]);
-            */
+            
+            g2.Cars.Add(_cars[2]);
+            g2.Cars.Add(_cars[3]);
+            
         }
     }
 }

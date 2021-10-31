@@ -1,20 +1,20 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Project.Domain;
+using Insurance.Domain;
 
-namespace Project.DAL.EF
+namespace Insurance.DAL.EF
 {
-    public class ProjectDbContext : DbContext
+    public class InsuranceDbContext : DbContext
     {
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Garage> Garages { get; set; }
 
-        public ProjectDbContext()
+        public InsuranceDbContext()
         {
             
-            ProjectInitializer.Initialize(this,false);
+            InsuranceInitializer.Initialize(this,false);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

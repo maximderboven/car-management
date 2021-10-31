@@ -1,10 +1,13 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Project.Domain;
-using Project.DAL;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using Insurance.Domain;
+using Insurance.DAL;
 
-namespace Project.BL
+namespace Insurance.BL
 {
     public class Manager : IManager
     {
@@ -31,8 +34,9 @@ namespace Project.BL
 
         public Car AddCar(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
-            if (mileage < 0) throw new Exception();
+            if (mileage < 0) throw new Exception("Miles need to be positive");
             var car = new Car(purchasePrice, brand, fuel, seats, mileage, garage);
+            ValidateCar(car);
             _repo.CreateCar(car);
             return car;
         }
@@ -55,8 +59,35 @@ namespace Project.BL
         public Driver AddDriver(string firstName, string lastName,DateTime dateOfBirth)
         {
             var driver = new Driver(firstName,lastName,dateOfBirth);
+            ValidateDriver(driver);
             _repo.CreateDriver(driver);
             return driver;
+        }
+        
+        //Validation: Car
+        private void ValidateCar(Car c)
+        {
+            ICollection<ValidationResult> errors = new Collection<ValidationResult>();
+            Validator.TryValidateObject(c, new ValidationContext(c), errors, validateAllProperties: true);
+            StringBuilder errormessage = new("");
+            foreach (var error in errors)
+            {
+                errormessage.Append(error).Append(Environment.NewLine);
+            }
+            throw new ValidationException(errormessage.ToString());
+        }
+        
+        //Validation: Driver
+        private void ValidateDriver(Driver d)
+        {
+            ICollection<ValidationResult> errors = new Collection<ValidationResult>();
+            Validator.TryValidateObject(d, new ValidationContext(d), errors, validateAllProperties: true);
+            StringBuilder errormessage = new("");
+            foreach (var error in errors)
+            {
+                errormessage.Append(error).Append(Environment.NewLine);
+            }
+            throw new ValidationException(errormessage.ToString());
         }
     }
 }

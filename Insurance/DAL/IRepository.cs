@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Domain;
+using Insurance.Domain;
 
-namespace Project.DAL
+namespace Insurance.DAL
 {
     public interface IRepository
     {

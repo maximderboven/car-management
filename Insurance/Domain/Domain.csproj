@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <RootNamespace>Project.Domain</RootNamespace>
+        <RootNamespace>Insurance.Domain</RootNamespace>
     </PropertyGroup>
 
 </Project>

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Project.Domain
+namespace Insurance.Domain
 {
     public class Garage
     {
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Garage name is required")] public string Name { get; set; }
         public string Adress { get; set; }
         public string Telnr { get; set; }
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
         
         public ICollection<Car> Cars { get; set; }
 
@@ -22,11 +23,6 @@ namespace Project.Domain
             Adress = adress;
             Telnr = telnr;
             Cars = new List<Car>();
-        }
-
-        public override string ToString()
-        {
-            return $"Garage {Name}";
         }
     }
 }

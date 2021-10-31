@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Project.Domain;
+using Insurance.Domain;
 
-namespace Project.DAL.EF
+namespace Insurance.DAL.EF
 {
-    public static class ProjectInitializer
+    public static class InsuranceInitializer
     {
         private static bool _isInitialized;
         
-        public static void Initialize(ProjectDbContext context, bool rebuild)
+        public static void Initialize(InsuranceDbContext context, bool rebuild)
         {
             if (rebuild)
                 context.Database.EnsureDeleted();
@@ -18,7 +18,7 @@ namespace Project.DAL.EF
             _isInitialized = true;
         }
 
-        private static void Seed(ProjectDbContext context)
+        private static void Seed(InsuranceDbContext context)
         {
             var d0 = new Driver("Andy", "Kost", new DateTime(1994, 1, 5));
             var d1 = new Driver("Jilles", "Frieling", new DateTime(1983, 5, 17));

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Project.Domain;
+using Insurance.Domain;
 
-namespace Project.DAL
+namespace Insurance.DAL
 {
     public class InMemoryRepository : IRepository
     {
@@ -12,12 +12,15 @@ namespace Project.DAL
 
         public InMemoryRepository()
         {
+            //init lists
+            _drivers = new List<Driver>();
+            _cars = new List<Car>();
             Seed();
         }
 
         public Car ReadCar(int numberplate)
         {
-            return _cars.FirstOrDefault(car => car.NumberPlate.Equals(numberplate));
+            return _cars.Single(car => car.NumberPlate.Equals(numberplate));
         }
 
         public IEnumerable<Car> ReadAllCars()
@@ -27,7 +30,7 @@ namespace Project.DAL
 
         public IEnumerable<Car> ReadCarsOf(Fuel fuel)
         {
-            return _cars.FindAll(car => car.Fuel.Equals(fuel));
+            return _cars.FindAll(car => car.Fuel.Equals(fuel)).AsEnumerable();
         }
 
         public void CreateCar(Car car)
@@ -39,7 +42,7 @@ namespace Project.DAL
 
         public Driver ReadDriver(int socialnumber)
         {
-            return _drivers.FirstOrDefault(driver => driver.SocialNumber.Equals(socialnumber));
+            return _drivers.Single(driver => driver.SocialNumber.Equals(socialnumber));
         }
 
         public IEnumerable<Driver> ReadAllDrivers()
@@ -49,9 +52,18 @@ namespace Project.DAL
 
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dob)
         {
-            return _drivers.Where(d =>
-                ((name is null) || (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower()))
-                && (dob.Equals(default(DateTime)) || dob.Equals(d.DateOfBirth.Date)));
+            IQueryable<Driver> filteredList = new EnumerableQuery<Driver>(_drivers);
+
+            if (!String.IsNullOrWhiteSpace(name))
+            {
+                filteredList = filteredList.Where(d => (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower()));
+            }
+            if (dob.HasValue)
+            {
+                filteredList = filteredList.Where(d => dob.Equals(d.DateOfBirth.Date));
+            }
+
+            return filteredList;
         }
 
         public void CreateDriver(Driver driver)
@@ -63,10 +75,6 @@ namespace Project.DAL
 
         private void Seed()
         {
-            //init lists
-            _drivers = new List<Driver>();
-            _cars = new List<Car>();
-
             CreateDriver(new Driver("Andy", "Kost", new DateTime(1994, 1, 5)));
             CreateDriver(new Driver("Jilles", "Frieling", new DateTime(1983, 5, 17)));
             CreateDriver(new Driver("Luite", "Poel", new DateTime(1958, 10, 12)));

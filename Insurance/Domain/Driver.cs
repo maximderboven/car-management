@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Insurance.Domain
 {
-    public class Driver
+    public class Driver : IValidatableObject
     {
         [Required(ErrorMessage = "Error: Firstname is required")]
-        [StringLength(40,ErrorMessage = "Error: MIN. 5 CHAR",MinimumLength = 5)]
+        [StringLength(40,ErrorMessage = "Error: Firstname min. 3 CHAR",MinimumLength = 3)]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Error: Lastname is required")]
-        [StringLength(40, ErrorMessage = "Error: MIN. 5 CHAR",MinimumLength = 5)]
+        [StringLength(40, ErrorMessage = "Error: Lastname min. 3 CHAR",MinimumLength = 3)]
         public string LastName { get; set; }
 
         [Key] public int SocialNumber { get; set; }
@@ -31,6 +32,18 @@ namespace Insurance.Domain
             Cars = new List<Car>();
         }
         
-        //need to add custom DateTime validation.
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new Collection<ValidationResult>();
+            if (DateOfBirth > DateTime.Now)
+            {
+                errors.Add(new ValidationResult("Error: Date must be in the past"));
+            }
+            if (DateOfBirth == DateTime.MinValue)
+            {
+                errors.Add(new ValidationResult("Error: Date can not be empty"));
+            }
+            return errors;
+        }
     }
 }

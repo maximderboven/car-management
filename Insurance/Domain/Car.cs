@@ -8,7 +8,7 @@ namespace Insurance.Domain
     public class Car : IValidatableObject
     {
         [Required(ErrorMessage = "Error: Brand is required")]
-        [StringLength(20, ErrorMessage = "Error: MIN. 5 CHAR & MAX. 20 CHAR ", MinimumLength = 5)]
+        [StringLength(20, ErrorMessage = "Error: Brand min. 2 CHAR & max. 20 CHAR ", MinimumLength = 2)]
         public string Brand { get; set; }
 
         [Key] public int NumberPlate { get; set; }
@@ -20,7 +20,7 @@ namespace Insurance.Domain
         [Required(ErrorMessage = "Error: Milage is required")]
         public double Mileage { get; set; }
 
-        public Garage? Garage { get; set; }
+        public Garage Garage { get; set; }
         public long? PurchasePrice = null;
 
         public ICollection<Driver> Drivers;
@@ -30,15 +30,15 @@ namespace Insurance.Domain
             Drivers = new List<Driver>();
         }
 
-        public Car(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage? garage)
+        public Car(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
+            Drivers = new List<Driver>();
             PurchasePrice = purchasePrice;
             Brand = brand;
             Fuel = fuel;
             Seats = seats;
             Mileage = mileage;
             Garage = garage;
-            Drivers = new List<Driver>();
         }
 
         //public INumerableValidationresult Validate(context context)
@@ -51,7 +51,6 @@ namespace Insurance.Domain
             {
                 errors.Add(new ValidationResult("Error: Fuel not supported"));
             }
-
             return errors;
         }
     }

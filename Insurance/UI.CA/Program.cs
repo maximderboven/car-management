@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Insurance.BL;
-using Insurance.DAL;
 using Insurance.DAL.EF;
 using Insurance.Domain;
 using Insurance.UI.CA.Extensions;
@@ -102,7 +100,18 @@ namespace Insurance.UI.CA
             {
                 Console.Write(i + 1 + "=" + enums[i] + ",");
             }
+
             Console.Write("\b): ");
+        }
+
+        private void PrintGaragesWithIndex()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            var garages = _manager.GetAllGarages().ToList();
+            for (var i = 0; i < garages.Count; i++)
+            {
+                Console.Write(i+1 + " -> " + garages[i].GetInfo() + "\n");
+            }
         }
 
         private void PrintCarsByFuel(int fuelType)
@@ -194,12 +203,13 @@ namespace Insurance.UI.CA
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nAdd a car\n=========\n");
-            bool pass = false;
+            var pass = false;
             do
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Purchase Price (optional): ");
                 Console.ResetColor();
+
                 int.TryParse(Console.ReadLine(), out int pprice);
 
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -212,7 +222,7 @@ namespace Insurance.UI.CA
                 PrintEnumWithIndex();
                 Console.ResetColor();
                 int.TryParse(Console.ReadLine(), out int fuel);
-                Fuel f = (Fuel) fuel-1;
+                Fuel f = (Fuel) fuel - 1;
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Amount of seats:");
@@ -224,10 +234,18 @@ namespace Insurance.UI.CA
                 Console.ResetColor();
                 int.TryParse(Console.ReadLine(), out int miles);
 
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Choose garage:");
+                PrintGaragesWithIndex();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("Garage: ");
+                Console.ResetColor();
+                int.TryParse(Console.ReadLine(), out int garage);
+                var g = _manager.GetAllGarages().ToList()[garage-1];
                 try
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    _manager.AddCar(pprice, brand, f, amount, miles, null);
+                    _manager.AddCar(pprice, brand, f, amount, miles, g);
                     Console.WriteLine("Added new car succesfully.");
                     pass = true;
                 }

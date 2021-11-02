@@ -13,6 +13,7 @@ namespace Insurance.BL
         public Car AddCar(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage);
         public Driver GetDriver(int socialnumber);
         public IEnumerable<Driver> GetAllDrivers();
+        public IEnumerable<Garage> GetAllGarages();
         public IEnumerable<Driver> GetAllDriversBy(string? name, DateTime? dateofbirth);
         public Driver AddDriver(string firstName, string lastName,DateTime dateOfBirth);
     }

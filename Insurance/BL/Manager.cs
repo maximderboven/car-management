@@ -34,7 +34,7 @@ namespace Insurance.BL
 
         public Car AddCar(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
-            if (mileage < 0) throw new Exception("Miles need to be positive");
+            if (mileage < 0) throw new ValidationException("Miles need to be positive");
             var car = new Car(purchasePrice, brand, fuel, seats, mileage, garage);
             ValidateCar(car);
             _repo.CreateCar(car);
@@ -56,6 +56,11 @@ namespace Insurance.BL
             return _repo.ReadDriversBy(name,dateofbirth);
         }
 
+        public IEnumerable<Garage> GetAllGarages()
+        {
+            return _repo.ReadAllGarages();
+        }
+
         public Driver AddDriver(string firstName, string lastName,DateTime dateOfBirth)
         {
             var driver = new Driver(firstName,lastName,dateOfBirth);
@@ -74,6 +79,7 @@ namespace Insurance.BL
             {
                 errormessage.Append(error).Append(Environment.NewLine);
             }
+            if (errormessage.Length <= 0) return;
             throw new ValidationException(errormessage.ToString());
         }
         
@@ -87,6 +93,8 @@ namespace Insurance.BL
             {
                 errormessage.Append(error).Append(Environment.NewLine);
             }
+
+            if (errormessage.Length <= 0) return;
             throw new ValidationException(errormessage.ToString());
         }
     }

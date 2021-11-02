@@ -9,12 +9,14 @@ namespace Insurance.DAL
     {
         private List<Driver> _drivers;
         private List<Car> _cars;
+        private List<Garage> _garages;
 
         public InMemoryRepository()
         {
             //init lists
             _drivers = new List<Driver>();
             _cars = new List<Car>();
+            _garages = new List<Garage>();
             Seed();
         }
 
@@ -47,7 +49,12 @@ namespace Insurance.DAL
 
         public IEnumerable<Driver> ReadAllDrivers()
         {
-            return _drivers;
+            return _drivers.AsEnumerable();
+        }
+
+        public IEnumerable<Garage> ReadAllGarages()
+        {
+            return _garages.AsEnumerable();
         }
 
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dob)
@@ -118,6 +125,10 @@ namespace Insurance.DAL
             g2.Cars.Add(_cars[2]);
             g2.Cars.Add(_cars[3]);
             
+            //toevoegen aan garage
+            _garages.Add(g1);
+            _garages.Add(g2);
+
         }
     }
 }

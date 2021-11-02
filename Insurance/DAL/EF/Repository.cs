@@ -46,6 +46,11 @@ namespace Insurance.DAL.EF
             return _context.Drivers.AsEnumerable();
         }
 
+        public IEnumerable<Garage> ReadAllGarages()
+        {
+            return _context.Garages.AsEnumerable();
+        }
+
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dateofbirth)
         {
             IQueryable<Driver> filteredList = _context.Drivers;

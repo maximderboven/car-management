@@ -13,6 +13,7 @@ namespace Insurance.DAL
         
         public Driver ReadDriver(int socialnumber);
         public IEnumerable<Driver> ReadAllDrivers();
+        public IEnumerable<Garage> ReadAllGarages();
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dateofbirth);
         public void CreateDriver(Driver driver);
         

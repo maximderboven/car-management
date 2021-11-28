@@ -80,6 +80,36 @@ namespace Insurance.DAL
             _drivers.Add(driver);
         }
 
+        public IEnumerable<Car> ReadAllCarsWithGarage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Driver> ReadAllDriversWithCars()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateRental(Rental bookAuthor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteRental(int socialnumber, int numberplate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Driver> ReadCarsOfDriver(int numberplate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Driver> ReadDriversOfCar(int numberplate)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Seed()
         {
             CreateDriver(new Driver("Andy", "Kost", new DateTime(1994, 1, 5)));
@@ -94,29 +124,6 @@ namespace Insurance.DAL
             CreateCar(new Car(10000, "Opel", Fuel.Gas, 6, 0, g1));
             CreateCar(new Car(null, "Audi", Fuel.Oil, 5, 5000, g2));
             CreateCar(new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g2));
-            
-
-            //autoos toevoegen aan drivers
-            _drivers[0].Cars.Add(_cars[1]);
-            _drivers[0].Cars.Add(_cars[2]);
-            
-            _drivers[1].Cars.Add(_cars[1]);
-            _drivers[1].Cars.Add(_cars[3]);
-            
-            _drivers[2].Cars.Add(_cars[2]);
-            _drivers[2].Cars.Add(_cars[3]);
-            
-            _drivers[3].Cars.Add(_cars[0]);
-            //Drivers toevoegen aan autoos
-            _cars[0].Drivers.Add(_drivers[3]);
-
-            _cars[1].Drivers.Add(_drivers[0]);
-            _cars[1].Drivers.Add(_drivers[1]);
-            
-            _cars[2].Drivers.Add(_drivers[0]);
-            _cars[2].Drivers.Add(_drivers[2]);
-            
-            _cars[3].Drivers.Add(_drivers[0]);
 
             //cars toevoegen aan garage voor onderhoud.
             g1.Cars.Add(_cars[0]);

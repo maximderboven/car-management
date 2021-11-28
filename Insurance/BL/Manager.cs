@@ -68,7 +68,32 @@ namespace Insurance.BL
             _repo.CreateDriver(driver);
             return driver;
         }
-        
+
+        public IEnumerable<Car> GetAllCarsWithGarage()
+        {
+            return _repo.ReadAllCarsWithGarage();
+        }
+
+        public IEnumerable<Driver> GetAllDriversWithCars()
+        {
+            return _repo.ReadAllDriversWithCars();
+        }
+
+        public void AddRental(Rental rental)
+        {
+            _repo.CreateRental(rental);
+        }
+
+        public void RemoveRental(int socialnumber, int numberplate)
+        {
+            _repo.DeleteRental(socialnumber,numberplate);
+        }
+
+        public IEnumerable<Driver> GetDriversOfCar(int numberplate)
+        {
+            return _repo.ReadDriversOfCar(numberplate);
+        }
+
         //Validation: Car
         private void ValidateCar(Car c)
         {

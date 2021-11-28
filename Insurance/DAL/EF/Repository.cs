@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Insurance.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Insurance.DAL.EF
 {
@@ -54,7 +55,7 @@ namespace Insurance.DAL.EF
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dateofbirth)
         {
             IQueryable<Driver> filteredList = _context.Drivers;
-            if (!String.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name))
             {
                 filteredList = filteredList.Where(d => (d.FirstName + " " + d.LastName).ToLower().Contains(name.ToLower()));
             }
@@ -75,6 +76,38 @@ namespace Insurance.DAL.EF
         {
             _context.Drivers.Add(driver);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Car> ReadAllCarsWithGarage()
+        {
+            return _context.Cars.Include(c => c.Garage);
+        }
+
+        public IEnumerable<Driver> ReadAllDriversWithCars()
+        {
+            return _context.Drivers.Include(d => d.Cars).ThenInclude(r => r.Car);
+        }
+
+        public void CreateRental(Rental rental)
+        {
+            _context.Rentals.Add(rental);
+            _context.SaveChanges();
+        }
+
+        public void DeleteRental(int socialnumber, int numberplate)
+        {
+            var rental = _context.Rentals
+                .Where(r => r.Car.NumberPlate == numberplate)
+                .Single(r => r.Driver.SocialNumber == socialnumber);
+            _context.Rentals.Remove(rental);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Driver> ReadDriversOfCar(int numberplate)
+        {
+            var car = _context.Cars.Include(c => c.Drivers).ThenInclude(r => r.Driver)
+                .ThenInclude(d => d.Cars).Single(c => c.NumberPlate == numberplate);
+            return car.Drivers.Select(r => r.Driver).ToList();
         }
     }
 }

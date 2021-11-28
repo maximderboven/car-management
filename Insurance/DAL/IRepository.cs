@@ -16,7 +16,10 @@ namespace Insurance.DAL
         public IEnumerable<Garage> ReadAllGarages();
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dateofbirth);
         public void CreateDriver(Driver driver);
-        
-        
+        public IEnumerable<Car> ReadAllCarsWithGarage();
+        public IEnumerable<Driver> ReadAllDriversWithCars();
+        public void CreateRental(Rental rental);
+        public void DeleteRental(int socialnumber, int numberplate);
+        public IEnumerable<Driver> ReadDriversOfCar(int numberplate);
     }
 }

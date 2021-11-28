@@ -17,6 +17,12 @@ namespace Insurance.DAL.EF
                 Seed(context);
             _isInitialized = true;
         }
+        
+        private static DateTime RandomDayAfter(DateTime date)
+        {
+            var range = (DateTime.Today - date).Days;           
+            return date.AddDays(new Random().Next(range));
+        }
 
         private static void Seed(InsuranceDbContext context)
         {
@@ -32,35 +38,16 @@ namespace Insurance.DAL.EF
             var c1 = new Car(10000, "Opel", Fuel.Gas, 6, 0, g0);
             var c2 = new Car(null, "Audi", Fuel.Oil, 5, 5000, g1);
             var c3 = new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g1);
-
-            //autoos toevoegen aan drivers
-            d0.Cars.Add(c1);
-            d0.Cars.Add(c2);
             
-            d1.Cars.Add(c1);
-            d1.Cars.Add(c3);
-            
-            d2.Cars.Add(c2);
-            d2.Cars.Add(c3);
-            
-            d3.Cars.Add(c0);
-            //Drivers toevoegen aan autoos
-            c0.Drivers.Add(d3);
-
-            c1.Drivers.Add(d0);
-            c1.Drivers.Add(d1);
-            
-            c2.Drivers.Add(d0);
-            c2.Drivers.Add(d2);
-            
-            c3.Drivers.Add(d0);
-
             //cars toevoegen aan garage voor onderhoud.
             g0.Cars.Add(c0);
             g0.Cars.Add(c1);
             
             g1.Cars.Add(c2);
             g1.Cars.Add(c3);
+
+            context.Garages.Add(g0);
+            context.Garages.Add(g1);
 
             //toevoegen aan context
             context.Cars.Add(c0);
@@ -72,11 +59,21 @@ namespace Insurance.DAL.EF
             context.Drivers.Add(d1);
             context.Drivers.Add(d2);
             context.Drivers.Add(d3);
+
+            //autoos toevoegen aan drivers en andersom adhv tussentabel
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c0, d3));
             
-            context.Garages.Add(g0);
-            context.Garages.Add(g1);
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c1, d1));
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c1, d0));
             
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c2, d0));
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c2, d2));
             
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c3, d0));
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c3, d1));
+            context.Rentals.Add(new Rental((new Random().NextDouble() * 999) + 1, DateTime.Now, RandomDayAfter(DateTime.Now), c3, d2));
+
+
             context.SaveChanges();
             context.ChangeTracker.Clear();
         }

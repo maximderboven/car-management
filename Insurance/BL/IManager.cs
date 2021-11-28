@@ -16,5 +16,10 @@ namespace Insurance.BL
         public IEnumerable<Garage> GetAllGarages();
         public IEnumerable<Driver> GetAllDriversBy(string? name, DateTime? dateofbirth);
         public Driver AddDriver(string firstName, string lastName,DateTime dateOfBirth);
+        public IEnumerable<Car> GetAllCarsWithGarage();
+        public IEnumerable<Driver> GetAllDriversWithCars();
+        public void AddRental(Rental rental);
+        public void RemoveRental(int socialnumber, int numberplate);
+        public IEnumerable<Driver> GetDriversOfCar(int numberplate);
     }
 }

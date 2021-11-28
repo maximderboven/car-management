@@ -60,6 +60,14 @@ namespace Insurance.UI.CA
                     case 6:
                         AddCar();
                         break;
+                    
+                    case 7:
+                        AddDriverToCar();
+                        break;
+                    
+                    case 8:
+                        RemoveDriverFromCar();
+                        break;
 
                     default:
                         Console.WriteLine($"{n} is not a valid option.");
@@ -73,7 +81,7 @@ namespace Insurance.UI.CA
         private static void PrintMenu()
         {
             Console.WriteLine(
-                "0) Quit\n1) Show all cars\n2) Show cars by Fuel \n3) Show all drivers \n4) All drivers with name and/or date of birth\n5) Add a driver\n6) Add a car");
+                "0) Quit\n1) Show all cars\n2) Show cars by Fuel \n3) Show all drivers \n4) All drivers with name and/or date of birth\n5) Add a driver\n6) Add a car\n7) Add a driver to car\n8) Remove driver from car");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Choice (0-6): ");
             Console.ResetColor();
@@ -83,7 +91,7 @@ namespace Insurance.UI.CA
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nAll cars\n=========");
-            foreach (var c in _manager.GetAllCars())
+            foreach (var c in _manager.GetAllCarsWithGarage())
             {
                 Console.WriteLine(c.GetInfo());
             }
@@ -129,9 +137,9 @@ namespace Insurance.UI.CA
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nAll drivers\n=========");
-            foreach (var d in _manager.GetAllDrivers())
+            foreach (var d in _manager.GetAllDriversWithCars())
             {
-                Console.WriteLine(d.GetInfo());
+                Console.WriteLine(d.GetInfo(true));
             }
 
             Console.ResetColor();
@@ -257,6 +265,65 @@ namespace Insurance.UI.CA
                 }
             } while (!pass);
 
+            Console.ResetColor();
+        }
+        
+        private void AddDriverToCar()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nAdd a new rental\n=========\n");
+            Console.ResetColor();
+            Console.WriteLine("\nWhich car would you like to add a driver to?");
+            foreach (var car in _manager.GetAllCarsWithGarage())
+            {
+                Console.WriteLine($"[{car.NumberPlate}] {car.GetInfo()}");
+            }
+            
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nPlease enter an car ID: ");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int carid);
+
+            Console.Write("Which driver would you like to add to this car?\n");
+            foreach (var d in _manager.GetAllDriversWithCars())
+            {
+                Console.Write($"[{d.SocialNumber}] {d.GetInfo(false)}");
+            }
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nPlease enter a driver ID: ");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int driverid);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nHow much does the rental cost: ");
+            Console.ResetColor();
+            double.TryParse(Console.ReadLine(), out double price);
+            _manager.AddRental(new Rental(price,DateTime.Now,DateTime.Now.AddDays(3),_manager.GetCar(carid),_manager.GetDriver(driverid)));
+        }
+        
+        private void RemoveDriverFromCar()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Remove a rental\n=========\n");
+            Console.ResetColor();
+            Console.WriteLine("\nWhich car would you like to remove a driver from?");
+            foreach (var car in _manager.GetAllCarsWithGarage())
+            {
+                Console.WriteLine($"[{car.NumberPlate}] {car.GetInfo()}");
+            }
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nPlease enter an car ID: ");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int carid);
+            Console.WriteLine("\nWhich driver would you like to remove from this car?\n");
+            foreach (var d in _manager.GetDriversOfCar(carid))
+            {
+                Console.Write($"[{d.SocialNumber}] {d.GetInfo(false)}");
+            }
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nPlease enter a driver ID: ");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int driverid);
+            _manager.RemoveRental(driverid, carid);
             Console.ResetColor();
         }
     }

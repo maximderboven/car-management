@@ -1,6 +1,44 @@
-﻿@{
-    ViewBag.Title = "title";
+﻿@using Insurance.Domain
+
+@{
+    ViewBag.Title = "Car Details";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Car Details</h2>
+<table class="table">
+    <tr>
+        <th>Brand</th><th >@Model.Brand</th>
+    </tr>
+    <tr>
+        <th>Fuel</th><th>@Model.Fuel</th>
+    </tr>
+    <tr>
+        <th>Seats</th><th>@Model.Seats</th>
+    </tr>
+    <tr>
+        <th>Mileage</th><th>@Model.Mileage</th>
+    </tr>
+</table>
+
+<h3>Drivers for this car</h3>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>DateOfBirth</th>
+        <th></th>
+
+
+    </tr>
+    @foreach (Driver d in ViewBag.drivers)
+    {
+        <tr>
+            <td>@d.FirstName @d.LastName</td>
+            <td>@d.DateOfBirth.ToString("dd-MM-yyyy")</td>
+            <td>
+                <a asp-controller="Driver" asp-action="Details" asp-route-socialnumber="@d.SocialNumber">Details</a>
+            </td>
+        </tr>
+    }
+</table>

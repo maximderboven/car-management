@@ -15,7 +15,7 @@ namespace Insurance.DAL.EF
         public InsuranceDbContext()
         {
             //rebuild bool: opnieuw db droppen en seeden (1x maar nodig)
-            InsuranceInitializer.Initialize(this,true);
+            InsuranceInitializer.Initialize(this,false);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

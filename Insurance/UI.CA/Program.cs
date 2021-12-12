@@ -14,7 +14,7 @@ namespace Insurance.UI.CA
         private Program()
         {
             //_manager = new Manager(new InMemoryRepository());
-            _manager = new Manager(new Repository());
+            _manager = new Manager(new Repository(new InsuranceDbContext()));
         }
 
         public static void Main(string[] args)

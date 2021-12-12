@@ -45,6 +45,11 @@ namespace Insurance.BL
         {
             return _repo.ReadDriver(socialnumber);
         }
+        
+        public Garage GetGarage(int id)
+        {
+            return _repo.ReadGarage(id);
+        }
 
         public IEnumerable<Driver> GetAllDrivers()
         {
@@ -67,6 +72,13 @@ namespace Insurance.BL
             ValidateDriver(driver);
             _repo.CreateDriver(driver);
             return driver;
+        }
+        
+        public Garage AddGarage(string name, string adress, string telnr)
+        {
+            var garage = new Garage(name, adress, telnr);
+            _repo.CreateGarage(garage);
+            return garage;
         }
 
         public IEnumerable<Car> GetAllCarsWithGarage()

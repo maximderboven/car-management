@@ -46,6 +46,16 @@ namespace Insurance.DAL
         {
             return _drivers.Single(driver => driver.SocialNumber.Equals(socialnumber));
         }
+        
+        public Garage ReadGarage(int id)
+        {
+            return _garages.Single(d=>d.Id.Equals(id));
+        }
+
+        public void CreateGarage(Garage garage)
+        {
+            throw new NotImplementedException();
+        }
 
         public IEnumerable<Driver> ReadAllDrivers()
         {

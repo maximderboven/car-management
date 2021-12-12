@@ -8,11 +8,11 @@ namespace Insurance.DAL.EF
 {
     public class Repository : IRepository
     {
-        private InsuranceDbContext _context;
+        private readonly InsuranceDbContext _context;
 
-        public Repository()
+        public Repository(InsuranceDbContext ctx)
         {
-            _context = new InsuranceDbContext();
+            _context = ctx;
         }
 
         public Car ReadCar(int numberplate)
@@ -36,10 +36,21 @@ namespace Insurance.DAL.EF
             _context.Cars.Add(car);
             _context.SaveChanges();
         }
+        
+        public void CreateGarage(Garage garage)
+        {
+            _context.Garages.Add(garage);
+            _context.SaveChanges();
+        }
 
         public Driver ReadDriver(int socialnumber)
         {
             return _context.Drivers.Single(d=>d.SocialNumber.Equals(socialnumber));
+        }
+        
+        public Garage ReadGarage(int id)
+        {
+            return _context.Garages.Single(d=>d.Id.Equals(id));
         }
 
         public IEnumerable<Driver> ReadAllDrivers()

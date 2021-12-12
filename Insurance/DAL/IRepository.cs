@@ -10,8 +10,9 @@ namespace Insurance.DAL
         public IEnumerable<Car> ReadAllCars();
         public IEnumerable<Car> ReadCarsOf(Fuel fuel);
         public void CreateCar(Car car);
-        
+        public void CreateGarage(Garage garage);
         public Driver ReadDriver(int socialnumber);
+        public Garage ReadGarage(int id);
         public IEnumerable<Driver> ReadAllDrivers();
         public IEnumerable<Garage> ReadAllGarages();
         public IEnumerable<Driver> ReadDriversBy(string? name, DateTime? dateofbirth);

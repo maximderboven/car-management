@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Insurance.BL;
+using Insurance.DAL;
+using Insurance.DAL.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace Insurance.UI.MVC
 {
@@ -23,6 +27,14 @@ namespace Insurance.UI.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IRepository repository = new Repository(new InsuranceDbContext());
+            IManager manager = new Manager(repository);
+            services.AddSingleton(manager);
+            //services.AddScoped<SupportCenterDbContext>();
+            //services.AddDbContext<InsuranceDbContext>(ServiceLifetime.Scoped);
+            //services.AddScoped<IRepository, Repository>();
+            //services.AddScoped<IManager, Manager>();
+            
             services.AddControllersWithViews();
         }
 

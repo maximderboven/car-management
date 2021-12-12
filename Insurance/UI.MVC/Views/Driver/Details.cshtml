@@ -1,0 +1,19 @@
+﻿@model Insurance.Domain.Driver
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Driver Details</h2>
+<table class="table">
+    <tr>
+        <th>Full Name</th><th >@Model.FirstName @Model.LastName</th>
+    </tr>
+    <tr>
+        <th>SocialNumber</th><th>@Model.SocialNumber</th>
+    </tr>
+    <tr>
+        <th>Date of Birth</th><th>@Model.DateOfBirth.ToString("dd-MM-yyyy")</th>
+    </tr>
+</table>

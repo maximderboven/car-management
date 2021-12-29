@@ -24,5 +24,13 @@ namespace Insurance.Domain
             Telnr = telnr;
             Cars = new List<Car>();
         }
+        public Garage(int id,string name, string adress, string telnr)
+        {
+            Id = id;
+            Name = name;
+            Adress = adress;
+            Telnr = telnr;
+            Cars = new List<Car>();
+        }
     }
 }

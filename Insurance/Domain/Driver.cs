@@ -17,11 +17,11 @@ namespace Insurance.Domain
 
         [Key] public int SocialNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public ICollection<Rental> Cars { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
 
         public Driver()
         {
-            Cars = new List<Rental>();
+            Rentals = new List<Rental>();
         }
 
         public Driver(string firstName, string lastName, DateTime dateOfBirth)
@@ -29,7 +29,7 @@ namespace Insurance.Domain
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
-            Cars = new List<Rental>();
+            Rentals = new List<Rental>();
         }
         
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

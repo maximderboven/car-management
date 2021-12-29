@@ -31,11 +31,11 @@ namespace Insurance.DAL.EF
             var d2 = new Driver("Luite", "Poel", new DateTime(1958, 10, 12));
             var d3 = new Driver("Caroliene", "Karremans", new DateTime(1945, 8, 7));
 
-            var g0 = new Garage("PSA retail", "Boomsesteenweg 894", "+3238719811");
-            var g1 = new Garage("Van Dessel", "Mortsel", "+3234403236");
+            var g0 = new Garage("PSA retail", "Boomsesteenweg 894, 2610 Antwerpen", "038719811");
+            var g1 = new Garage("Van Dessel", "Krijgsbaan 51, 2640 Mortsel", "034403236");
             
             var c0 = new Car(null, "Citroen", Fuel.Gas, 4, 0, g0);
-            var c1 = new Car(10000, "Opel", Fuel.Gas, 6, 0, g0);
+            var c1 = new Car(10000, "Opel", Fuel.Gas, 6, 100.6, g0);
             var c2 = new Car(null, "Audi", Fuel.Oil, 5, 5000, g1);
             var c3 = new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g1);
             

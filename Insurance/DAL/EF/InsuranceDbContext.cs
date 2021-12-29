@@ -20,8 +20,10 @@ namespace Insurance.DAL.EF
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // configure lazy-loading
+            //optionsBuilder.UseLazyLoadingProxies(false);
             optionsBuilder.EnableSensitiveDataLogging(true);
-            optionsBuilder.UseSqlite("Data Source=../../../../database.db");
+            optionsBuilder.UseSqlite("Data Source=../../database.db");
             optionsBuilder.LogTo(p => Debug.WriteLine(p), LogLevel.Information);
         }
         
@@ -38,13 +40,13 @@ namespace Insurance.DAL.EF
             //de veel op veel tussentabel
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.Driver)
-                .WithMany(d => d.Cars)
+                .WithMany(d => d.Rentals)
                 .HasForeignKey("FK_DriverID")
                 .IsRequired();
             
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.Car)
-                .WithMany(c => c.Drivers)
+                .WithMany(c => c.Rentals)
                 .HasForeignKey("FK_CarID")
                 .IsRequired();
 

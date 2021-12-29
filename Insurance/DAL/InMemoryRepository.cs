@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Insurance.Domain;
-
+#nullable enable
 namespace Insurance.DAL
 {
     public class InMemoryRepository : IRepository
@@ -18,6 +18,21 @@ namespace Insurance.DAL
             _cars = new List<Car>();
             _garages = new List<Garage>();
             Seed();
+        }
+
+        public IEnumerable<Car> ReadCarsWithoutDriver(int socialnumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Car> IRepository.ReadCarsOfDriver(int socialnumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ChangeGarage(Garage garage)
+        {
+            throw new NotImplementedException();
         }
 
         public Car ReadCar(int numberplate)

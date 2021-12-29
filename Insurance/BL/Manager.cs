@@ -73,7 +73,22 @@ namespace Insurance.BL
             _repo.CreateDriver(driver);
             return driver;
         }
-        
+
+        public IEnumerable<Car> GetCarsWithoutDriver(int socialnumber)
+        {
+            return _repo.ReadCarsWithoutDriver(socialnumber);
+        }
+
+        public IEnumerable<Car> GetCarsOfDriver(int socialnumber)
+        {
+            return _repo.ReadCarsOfDriver(socialnumber);
+        }
+
+        public bool ChangeGarage(Garage garage)
+        {
+            return _repo.ChangeGarage(garage);
+        }
+
         public Garage AddGarage(string name, string adress, string telnr)
         {
             var garage = new Garage(name, adress, telnr);
@@ -110,29 +125,29 @@ namespace Insurance.BL
         private void ValidateCar(Car c)
         {
             ICollection<ValidationResult> errors = new Collection<ValidationResult>();
-            Validator.TryValidateObject(c, new ValidationContext(c), errors, validateAllProperties: true);
+            var valid = Validator.TryValidateObject(c, new ValidationContext(c), errors, validateAllProperties: true);
             StringBuilder errormessage = new("");
             foreach (var error in errors)
             {
                 errormessage.Append(error).Append(Environment.NewLine);
             }
-            if (errormessage.Length <= 0) return;
-            throw new ValidationException(errormessage.ToString());
+            if (!valid)
+                throw new ValidationException(errormessage.ToString());
         }
         
         //Validation: Driver
         private void ValidateDriver(Driver d)
         {
             ICollection<ValidationResult> errors = new Collection<ValidationResult>();
-            Validator.TryValidateObject(d, new ValidationContext(d), errors, validateAllProperties: true);
+            var valid = Validator.TryValidateObject(d, new ValidationContext(d), errors, validateAllProperties: true);
             StringBuilder errormessage = new("");
             foreach (var error in errors)
             {
                 errormessage.Append(error).Append(Environment.NewLine);
             }
 
-            if (errormessage.Length <= 0) return;
-            throw new ValidationException(errormessage.ToString());
+            if (!valid)
+                throw new ValidationException(errormessage.ToString());
         }
     }
 }

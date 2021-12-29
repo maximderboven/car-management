@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Insurance.Domain;
+#nullable enable
 
 namespace Insurance.DAL
 {
@@ -22,5 +23,8 @@ namespace Insurance.DAL
         public void CreateRental(Rental rental);
         public void DeleteRental(int socialnumber, int numberplate);
         public IEnumerable<Driver> ReadDriversOfCar(int numberplate);
+        IEnumerable<Car> ReadCarsWithoutDriver(int socialnumber);
+        IEnumerable<Car> ReadCarsOfDriver(int socialnumber);
+        public bool ChangeGarage(Garage garage);
     }
 }

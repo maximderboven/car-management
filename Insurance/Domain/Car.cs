@@ -23,16 +23,16 @@ namespace Insurance.Domain
         public Garage Garage { get; set; }
         public long? PurchasePrice { get; set; }
 
-        public ICollection<Rental> Drivers;
+        public ICollection<Rental> Rentals;
 
         public Car()
         {
-            Drivers = new List<Rental>();
+            Rentals = new List<Rental>();
         }
 
         public Car(long? purchasePrice, string brand, Fuel fuel, short seats, double mileage, Garage garage)
         {
-            Drivers = new List<Rental>();
+            Rentals = new List<Rental>();
             PurchasePrice = purchasePrice;
             Brand = brand;
             Fuel = fuel;

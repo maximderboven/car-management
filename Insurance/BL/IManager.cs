@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Insurance.Domain;
-
+#nullable enable
 namespace Insurance.BL
 {
     public interface IManager
@@ -23,5 +23,9 @@ namespace Insurance.BL
         public void AddRental(Rental rental);
         public void RemoveRental(int socialnumber, int numberplate);
         public IEnumerable<Driver> GetDriversOfCar(int numberplate);
+        public IEnumerable<Car> GetCarsWithoutDriver(int socialnumber);
+        public IEnumerable<Car> GetCarsOfDriver(int socialnumber);
+        public bool ChangeGarage(Garage garage);
+
     }
 }

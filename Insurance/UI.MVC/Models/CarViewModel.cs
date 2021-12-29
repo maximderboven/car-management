@@ -5,6 +5,7 @@ namespace UI.MVC.Models
 {
     public class CarViewModel
     {
+        //required nrml niet nodig aangezien door string length
         [Required(ErrorMessage = "Brand is required")]
         [StringLength(20, ErrorMessage = "Error: Brand min. 2 CHAR & max. 20 CHAR ", MinimumLength = 2)]
         public string Brand { get; set; }

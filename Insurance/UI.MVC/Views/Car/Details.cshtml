@@ -6,39 +6,48 @@
 }
 
 <h2>Car Details</h2>
-<table class="table">
+<table>
     <tr>
-        <th>Brand</th><th >@Model.Brand</th>
+        <th>Brand</th><td>@Model.Brand</td>
     </tr>
     <tr>
-        <th>Fuel</th><th>@Model.Fuel</th>
+        <th>Fuel</th><td>@Model.Fuel</td>
     </tr>
     <tr>
-        <th>Seats</th><th>@Model.Seats</th>
+        <th>Seats</th><td>@Model.Seats</td>
     </tr>
     <tr>
-        <th>Mileage</th><th>@Model.Mileage</th>
+        <th>Mileage</th><td>@Model.Mileage</td>
+    </tr>
+    <tr>
+        <th>Purchaseprice</th>
+        @{
+            var PurchasePrice = Model.PurchasePrice != null ? Model.PurchasePrice.ToString() : "Not Known";
+        }
+        <td>@PurchasePrice</td>
     </tr>
 </table>
 
 <h3>Drivers for this car</h3>
 
 <table class="table">
+    <thead class="thead-light">
     <tr>
-        <th>Name</th>
-        <th>DateOfBirth</th>
-        <th></th>
-
-
+        <th scope="col">Name</th>
+        <th scope="col">Date Of Birth</th>
+        <th scope="col"></th>
     </tr>
+    </thead>
+    <tbody>
     @foreach (Driver d in ViewBag.drivers)
     {
         <tr>
             <td>@d.FirstName @d.LastName</td>
-            <td>@d.DateOfBirth.ToString("dd-MM-yyyy")</td>
+            <td>@d.DateOfBirth.ToString("dd/MM/yyyy")</td>
             <td>
                 <a asp-controller="Driver" asp-action="Details" asp-route-socialnumber="@d.SocialNumber">Details</a>
             </td>
         </tr>
     }
+    </tbody>
 </table>

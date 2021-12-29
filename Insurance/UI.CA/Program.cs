@@ -4,7 +4,7 @@ using Insurance.BL;
 using Insurance.DAL.EF;
 using Insurance.Domain;
 using Insurance.UI.CA.Extensions;
-
+#nullable enable
 namespace Insurance.UI.CA
 {
     internal class Program
@@ -95,7 +95,6 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(c.GetInfo());
             }
-
             Console.ResetColor();
         }
 
@@ -108,7 +107,6 @@ namespace Insurance.UI.CA
             {
                 Console.Write(i + 1 + "=" + enums[i] + ",");
             }
-
             Console.Write("\b): ");
         }
 
@@ -129,7 +127,6 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(c.GetInfo());
             }
-
             Console.ResetColor();
         }
 
@@ -141,7 +138,6 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(d.GetInfo(true));
             }
-
             Console.ResetColor();
         }
 
@@ -191,6 +187,8 @@ namespace Insurance.UI.CA
                 DateTime.TryParse(Console.ReadLine(), out DateTime dob);
                 try
                 {
+                    if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(lastname))
+                        throw new Exception();
                     _manager.AddDriver(firstname, lastname, dob);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Added new driver succesfully.");
@@ -294,6 +292,7 @@ namespace Insurance.UI.CA
             Console.ResetColor();
             int.TryParse(Console.ReadLine(), out int driverid);
             Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\nHow much does the rental cost: ");
             Console.Write("\nHow much does the rental cost: ");
             Console.ResetColor();
             double.TryParse(Console.ReadLine(), out double price);

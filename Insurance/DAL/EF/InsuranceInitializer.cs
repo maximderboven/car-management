@@ -5,12 +5,14 @@ using Insurance.Domain;
 
 namespace Insurance.DAL.EF
 {
-    public static class InsuranceInitializer
+    internal static class InsuranceInitializer
     {
         private static bool _isInitialized;
         
         public static void Initialize(InsuranceDbContext context, bool rebuild)
         {
+            if (_isInitialized)
+                return;
             if (rebuild)
                 context.Database.EnsureDeleted();
             if (context.Database.EnsureCreated())
@@ -34,10 +36,10 @@ namespace Insurance.DAL.EF
             var g0 = new Garage("PSA retail", "Boomsesteenweg 894, 2610 Antwerpen", "038719811");
             var g1 = new Garage("Van Dessel", "Krijgsbaan 51, 2640 Mortsel", "034403236");
             
-            var c0 = new Car(null, "Citroen", Fuel.Gas, 4, 0, g0);
-            var c1 = new Car(10000, "Opel", Fuel.Gas, 6, 100.6, g0);
-            var c2 = new Car(null, "Audi", Fuel.Oil, 5, 5000, g1);
-            var c3 = new Car(35540, "BMW", Fuel.Lpg, 5, 6000, g1);
+            var c0 = new Car(null, "Citroen", Fuel.Gas, 4, 49.54, g0);
+            var c1 = new Car(10000, "Opel", Fuel.Gas, 6, 100.61, g0);
+            var c2 = new Car(null, "Audi", Fuel.Oil, 5, 5000.87, g1);
+            var c3 = new Car(35540, "BMW", Fuel.Lpg, 5, 691.8, g1);
             
             //cars toevoegen aan garage voor onderhoud.
             g0.Cars.Add(c0);

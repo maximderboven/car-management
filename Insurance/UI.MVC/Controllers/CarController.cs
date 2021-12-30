@@ -32,8 +32,8 @@ namespace UI.MVC.Controllers
         [HttpGet]
         public IActionResult Details(int numberplate)
         {
-            ViewBag.drivers = _manager.GetDriversOfCar(numberplate);
-            return View(_manager.GetCar(numberplate));
+            //ViewBag.drivers = _manager.GetDriversOfCar(numberplate);
+            return View(_manager.GetCarWithDrivers(numberplate));
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace UI.MVC.Controllers
                 ViewData["garages"] = _manager.GetAllGarages().ToList();
                 return View();
             }
-
+            //Hij pakt de Mileage niet goed omdat er een foute omzetting gebeurd door regio: , & .
             var car = _manager.AddCar(cvm.PurchasePrice, cvm.Brand, cvm.Fuel, cvm.Seats, cvm.Mileage,
                 _manager.GetGarage(cvm.Garage));
             return RedirectToAction("Details", "Car", new {numberplate = car.NumberPlate});

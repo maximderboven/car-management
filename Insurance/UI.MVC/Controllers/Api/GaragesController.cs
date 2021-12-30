@@ -69,8 +69,8 @@ namespace UI.MVC.Controllers.Api
         public IActionResult Post(NewGarageDTO response)
         {
             var g = _manager.AddGarage(response.Name,response.Adress,response.Telnr);
-            if (g == null)
-                return BadRequest("Error :(");
+            //if (g == null)
+                //return BadRequest("Error :(");
             return Ok();
         }
         

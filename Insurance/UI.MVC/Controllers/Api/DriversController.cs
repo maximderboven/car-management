@@ -73,7 +73,7 @@ namespace UI.MVC.Controllers.Api
         {
             if (!Validator.TryValidateObject(response,new ValidationContext(response),null, true))
                 return BadRequest("Error");
-            _manager.AddRental(new Rental(response.Price,response.StartDate,response.EndDate,_manager.GetCar(response.numberPlate),_manager.GetDriver(response.socialnumber)));
+            _manager.AddRental(new Rental(response.Price,response.StartDate,response.EndDate,_manager.GetCar(response.NumberPlate),_manager.GetDriver(response.Socialnumber)));
             return Ok();
         }
     }

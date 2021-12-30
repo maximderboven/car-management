@@ -35,6 +35,11 @@ namespace Insurance.DAL
             throw new NotImplementedException();
         }
 
+        public Car ReadCarWithDrivers(int numberplate)
+        {
+            throw new NotImplementedException();
+        }
+
         public Car ReadCar(int numberplate)
         {
             return _cars.Single(car => car.NumberPlate.Equals(numberplate));

@@ -27,5 +27,6 @@ namespace Insurance.BL
         public IEnumerable<Car> GetCarsOfDriver(int socialnumber);
         public bool ChangeGarage(Garage garage);
 
+        public Car GetCarWithDrivers(int numberplate);
     }
 }

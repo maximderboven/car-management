@@ -42,7 +42,7 @@ namespace Insurance.UI.CA
                         break;
                     case 2:
                         PrintEnumWithIndex();
-                        PrintCarsByFuel(int.Parse(Console.ReadLine() ?? string.Empty));
+                        PrintCarsByFuel(int.Parse(Console.ReadLine()));
                         break;
 
                     case 3:
@@ -83,7 +83,7 @@ namespace Insurance.UI.CA
             Console.WriteLine(
                 "0) Quit\n1) Show all cars\n2) Show cars by Fuel \n3) Show all drivers \n4) All drivers with name and/or date of birth\n5) Add a driver\n6) Add a car\n7) Add a driver to car\n8) Remove driver from car");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("Choice (0-6): ");
+            Console.Write("Choice (0-8): ");
             Console.ResetColor();
         }
 
@@ -98,7 +98,7 @@ namespace Insurance.UI.CA
             Console.ResetColor();
         }
 
-        private void PrintEnumWithIndex()
+        private static void PrintEnumWithIndex()
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Fuel (");

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Insurance.Domain;
@@ -23,7 +24,7 @@ namespace Insurance.DAL.EF
             // configure lazy-loading
             //optionsBuilder.UseLazyLoadingProxies(false);
             optionsBuilder.EnableSensitiveDataLogging(true);
-            optionsBuilder.UseSqlite("Data Source=../../database.db");
+            optionsBuilder.UseSqlite(@$"Data Source={Directory.GetCurrentDirectory()}\..\database.db");
             optionsBuilder.LogTo(p => Debug.WriteLine(p), LogLevel.Information);
         }
         

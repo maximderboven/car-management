@@ -7,7 +7,7 @@ namespace Insurance.UI.CA.Extensions
     {
         internal static string GetInfo(this Car c)
         {
-            return $"Car with numberplate: {c.NumberPlate} from {c.Brand} - on {c.Fuel.ToString()} [Managed by garage '{c.Garage.Name}'] {c.PurchasePrice}";
+            return c.Garage != null ? $"Car with numberplate: {c.NumberPlate} from {c.Brand} - on {c.Fuel.ToString()} [Managed by garage '{c.Garage.Name}'] {c.PurchasePrice}" : $"Car with numberplate: {c.NumberPlate} from {c.Brand} - on {c.Fuel.ToString()} {c.PurchasePrice}";
         }
 
     }

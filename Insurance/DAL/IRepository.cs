@@ -23,8 +23,9 @@ namespace Insurance.DAL
         public void CreateRental(Rental rental);
         public void DeleteRental(int socialnumber, int numberplate);
         public IEnumerable<Driver> ReadDriversOfCar(int numberplate);
-        IEnumerable<Car> ReadCarsWithoutDriver(int socialnumber);
-        IEnumerable<Car> ReadCarsOfDriver(int socialnumber);
+        public IEnumerable<Car> ReadCarsWithoutDriver(int socialnumber);
+        public IEnumerable<Car> ReadCarsOfDriver(int socialnumber);
         public bool ChangeGarage(Garage garage);
+        public Car ReadCarWithDrivers(int numberplate);
     }
 }

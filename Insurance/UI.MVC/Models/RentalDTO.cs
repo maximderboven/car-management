@@ -13,8 +13,8 @@ namespace UI.MVC.Models
         public double Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int numberPlate { get; set; }
-        public int socialnumber { get; set; }
+        public int NumberPlate { get; set; }
+        public int Socialnumber { get; set; }
         
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

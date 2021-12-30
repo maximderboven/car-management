@@ -29,7 +29,7 @@ namespace Insurance.DAL.EF
 
         public IEnumerable<Car> ReadCarsOf(Fuel fuel)
         {
-            return _context.Cars.Where(car => car.Fuel.Equals(fuel)).AsEnumerable();
+            return _context.Cars.Include(c => c.Garage).Where(car => car.Fuel.Equals(fuel));
         }
 
         public void CreateCar(Car car)
@@ -138,6 +138,11 @@ namespace Insurance.DAL.EF
             garage.Telnr = garageDto.Telnr;
             _context.SaveChanges();
             return true;
+        }
+
+        public Car ReadCarWithDrivers(int numberplate)
+        {
+            return _context.Cars.Include(c => c.Rentals).ThenInclude(r => r.Driver).Single(c => c.NumberPlate.Equals(numberplate));
         }
 
         public IEnumerable<Car> ReadCarsWithoutDriver(int socialnumber)

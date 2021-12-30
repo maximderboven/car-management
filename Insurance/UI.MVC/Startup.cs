@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Insurance.BL;
@@ -27,13 +28,13 @@ namespace Insurance.UI.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IRepository repository = new Repository(new InsuranceDbContext());
-            IManager manager = new Manager(repository);
-            services.AddSingleton(manager);
-            //services.AddScoped<SupportCenterDbContext>();
+            //IRepository repository = new Repository(new InsuranceDbContext());
+            //IManager manager = new Manager(repository);
+            //services.AddSingleton(manager);
             //services.AddDbContext<InsuranceDbContext>(ServiceLifetime.Scoped);
-            //services.AddScoped<IRepository, Repository>();
-            //services.AddScoped<IManager, Manager>();
+            services.AddDbContext<InsuranceDbContext>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IManager, Manager>();
             
             services.AddControllersWithViews();
         }
@@ -41,6 +42,14 @@ namespace Insurance.UI.MVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //app.UseRequestLocalization();
+            //added voor punt - komma culture - Nu is het altijd ',' 
+            //(Werkt niet :'( ) 
+            //var cultureInfo = new CultureInfo("nl-BE");
+            //cultureInfo.NumberFormat.NumberDecimalSeparator = ",";
+            //CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            //CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

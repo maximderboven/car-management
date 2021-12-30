@@ -24,7 +24,7 @@
     <div class="form-group">
         <label asp-for="Mileage">Mileage (Double)</label>
         <!--  asp-is-invariant="true" is voor de komma en punt regio (werkt alsnog niet)-->
-        <input asp-for="Mileage" type="number" step="0,01"  class="form-control"/>
+        <input asp-for="Mileage" type="number" step="0.01"  class="form-control"/>
         <span asp-validation-for="Mileage" class="text-danger"></span>
     </div>
     <div class="form-group">

@@ -86,8 +86,8 @@ function addRental() {
         Price: price,
         StartDate: from,
         EndDate: until,
-        socialnumber: driverid,
-        numberPlate: car
+        Socialnumber: driverid,
+        NumberPlate: car
     };
     fetch('../api/Drivers', {
         method: 'POST',

@@ -10,7 +10,7 @@ using UI.MVC.Models;
 
 namespace UI.MVC.Controllers.Api
 {
-    [ApiController]
+    [ApiController] //of [FromBody] in de methode params
     [Route("api/[controller]")]
     public class DriversController : Controller
     {

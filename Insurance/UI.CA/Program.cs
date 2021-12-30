@@ -4,6 +4,7 @@ using Insurance.BL;
 using Insurance.DAL.EF;
 using Insurance.Domain;
 using Insurance.UI.CA.Extensions;
+
 #nullable enable
 namespace Insurance.UI.CA
 {
@@ -60,11 +61,11 @@ namespace Insurance.UI.CA
                     case 6:
                         AddCar();
                         break;
-                    
+
                     case 7:
                         AddDriverToCar();
                         break;
-                    
+
                     case 8:
                         RemoveDriverFromCar();
                         break;
@@ -95,6 +96,7 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(c.GetInfo());
             }
+
             Console.ResetColor();
         }
 
@@ -107,6 +109,7 @@ namespace Insurance.UI.CA
             {
                 Console.Write(i + 1 + "=" + enums[i] + ",");
             }
+
             Console.Write("\b): ");
         }
 
@@ -116,7 +119,7 @@ namespace Insurance.UI.CA
             var garages = _manager.GetAllGarages().ToList();
             for (var i = 0; i < garages.Count; i++)
             {
-                Console.Write(i+1 + " -> " + garages[i].GetInfo() + "\n");
+                Console.Write(i + 1 + " -> " + garages[i].GetInfo() + "\n");
             }
         }
 
@@ -127,6 +130,7 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(c.GetInfo());
             }
+
             Console.ResetColor();
         }
 
@@ -138,6 +142,7 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine(d.GetInfo(true));
             }
+
             Console.ResetColor();
         }
 
@@ -168,39 +173,34 @@ namespace Insurance.UI.CA
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nAdd a driver\n=========\n");
-            bool pass = false;
-            do
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("firstname: ");
+            Console.ResetColor();
+            var firstname = Console.ReadLine();
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("lastname: ");
+            Console.ResetColor();
+            var lastname = Console.ReadLine();
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Date of birth (mm/dd/yyyy): ");
+            Console.ResetColor();
+            DateTime.TryParse(Console.ReadLine(), out DateTime dob);
+            try
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("firstname: ");
-                Console.ResetColor();
-                var firstname = Console.ReadLine();
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("lastname: ");
-                Console.ResetColor();
-                var lastname = Console.ReadLine();
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Date of birth (mm/dd/yyyy): ");
-                Console.ResetColor();
-                DateTime.TryParse(Console.ReadLine(), out DateTime dob);
-                try
-                {
-                    if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(lastname))
-                        throw new Exception();
-                    _manager.AddDriver(firstname, lastname, dob);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Added new driver succesfully.");
-                    pass = true;
-                }
-                catch (Exception e)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Unable to add new driver:");
-                    Console.WriteLine(e.Message);
-                }
-            } while (!pass);
+                if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(lastname))
+                    throw new Exception();
+                _manager.AddDriver(firstname, lastname, dob);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Added new driver succesfully.");
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Unable to add new driver:");
+                Console.WriteLine(e.Message);
+            }
 
             Console.ResetColor();
         }
@@ -209,63 +209,58 @@ namespace Insurance.UI.CA
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nAdd a car\n=========\n");
-            var pass = false;
-            do
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Purchase Price (optional): ");
+            Console.ResetColor();
+
+            int.TryParse(Console.ReadLine(), out int pprice);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Brand:");
+            Console.ResetColor();
+            string brand = Console.ReadLine();
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Fuel:");
+            PrintEnumWithIndex();
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int fuel);
+            Fuel f = (Fuel) fuel - 1;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Amount of seats:");
+            Console.ResetColor();
+            short.TryParse(Console.ReadLine(), out short amount);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Amount of miles on count:");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int miles);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Choose garage:");
+            PrintGaragesWithIndex();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Garage: ");
+            Console.ResetColor();
+            int.TryParse(Console.ReadLine(), out int garage);
+            var g = _manager.GetAllGarages().ToList()[garage - 1];
+            try
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Purchase Price (optional): ");
-                Console.ResetColor();
-
-                int.TryParse(Console.ReadLine(), out int pprice);
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Brand:");
-                Console.ResetColor();
-                string brand = Console.ReadLine();
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Fuel:");
-                PrintEnumWithIndex();
-                Console.ResetColor();
-                int.TryParse(Console.ReadLine(), out int fuel);
-                Fuel f = (Fuel) fuel - 1;
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Amount of seats:");
-                Console.ResetColor();
-                short.TryParse(Console.ReadLine(), out short amount);
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Amount of miles on count:");
-                Console.ResetColor();
-                int.TryParse(Console.ReadLine(), out int miles);
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Choose garage:");
-                PrintGaragesWithIndex();
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Garage: ");
-                Console.ResetColor();
-                int.TryParse(Console.ReadLine(), out int garage);
-                var g = _manager.GetAllGarages().ToList()[garage-1];
-                try
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    _manager.AddCar(pprice, brand, f, amount, miles, g);
-                    Console.WriteLine("Added new car succesfully.");
-                    pass = true;
-                }
-                catch (Exception e)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Unable to add new car:");
-                    Console.WriteLine(e.Message);
-                }
-            } while (!pass);
+                Console.ForegroundColor = ConsoleColor.Green;
+                _manager.AddCar(pprice, brand, f, amount, miles, g);
+                Console.WriteLine("Added new car succesfully.");
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Unable to add new car:");
+                Console.WriteLine(e.Message);
+            }
 
             Console.ResetColor();
         }
-        
+
         private void AddDriverToCar()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -276,7 +271,7 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine($"[{car.NumberPlate}] {car.GetInfo()}");
             }
-            
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("\nPlease enter an car ID: ");
             Console.ResetColor();
@@ -287,6 +282,7 @@ namespace Insurance.UI.CA
             {
                 Console.Write($"[{d.SocialNumber}] {d.GetInfo(false)}");
             }
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("\nPlease enter a driver ID: ");
             Console.ResetColor();
@@ -296,9 +292,19 @@ namespace Insurance.UI.CA
             Console.Write("\nHow much does the rental cost: ");
             Console.ResetColor();
             double.TryParse(Console.ReadLine(), out double price);
-            _manager.AddRental(new Rental(price,DateTime.Now,DateTime.Now.AddDays(3),_manager.GetCar(carid),_manager.GetDriver(driverid)));
+            try
+            {
+                _manager.AddRental(new Rental(price, DateTime.Now, DateTime.Now.AddDays(3), _manager.GetCar(carid),
+                    _manager.GetDriver(driverid)));
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Something went wrong, please try again.");
+                Console.ResetColor();
+            }
         }
-        
+
         private void RemoveDriverFromCar()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -309,20 +315,39 @@ namespace Insurance.UI.CA
             {
                 Console.WriteLine($"[{car.NumberPlate}] {car.GetInfo()}");
             }
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("\nPlease enter an car ID: ");
             Console.ResetColor();
             int.TryParse(Console.ReadLine(), out int carid);
             Console.WriteLine("\nWhich driver would you like to remove from this car?\n");
-            foreach (var d in _manager.GetDriversOfCar(carid))
+            try
             {
-                Console.Write($"[{d.SocialNumber}] {d.GetInfo(false)}");
+                foreach (var d in _manager.GetDriversOfCar(carid))
+                {
+                    Console.Write($"[{d.SocialNumber}] {d.GetInfo(false)}");
+                }
             }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("This driver does not exist. Please try again.");
+            }
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("\nPlease enter a driver ID: ");
             Console.ResetColor();
             int.TryParse(Console.ReadLine(), out int driverid);
-            _manager.RemoveRental(driverid, carid);
+            try
+            {
+                _manager.RemoveRental(driverid, carid);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Something went wrong, please try again.");
+            }
+
             Console.ResetColor();
         }
     }
